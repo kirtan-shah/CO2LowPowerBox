@@ -4,7 +4,7 @@ function unpack(rows, key) {
 function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment()) {
     $.get(`/loadData?startTime=${before.toISOString()}&endTime=${after.toISOString()}`, function(data) {
         let rows = data.values;
-        let dates = rows.map(row => moment().utc(row.ts).toISOString());
+        let dates = rows.map(row => row.ts);
         let trace1 = {
             type: 'scatter',
             name: 'CO2 (ppm)',

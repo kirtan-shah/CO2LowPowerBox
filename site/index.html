@@ -4,9 +4,22 @@
         <title>CO2 Box</title>
         <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
         <script src="jquery-3.6.0.min.js"></script>
+        <script src="moment.js"></script>
         <script src="main.js"></script>
+        <link rel="stylesheet" href="main.css" />
     </head>
     <body>
+        <div id="overlay"></div>
         <div id="chart"></div>
+        <div id="windows">
+            <div class="input-wrap">
+                <label for="startWindow">Start Window</label>
+                <input id="startWindow" type="datetime-local"></input>
+            </div>
+            <div class="input-wrap">
+                <label for="endWindow">End Window</label>
+                <input id="endWindow" type="datetime-local"></input>
+            </div>
+        </div>
     </body>
 </html>

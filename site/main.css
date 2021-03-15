@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@300&display=swap');
+body {
+    background: url('./luca-bravo-ESkw2ayO2As-unsplash.jpg');
+    background-size: cover;
+}
+#overlay {
+    display: block;
+    position: fixed;
+    width: calc(100vw);
+    height: calc(100vh);
+    padding: 0;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    background: white;
+    opacity: 0.9;
+    /* filter: blur(2px); */
+}
+.modebar {
+    margin-top: 1rem !important;
+    margin-right: 0.5rem !important;
+}
+#windows {
+    display: flex;
+    flex-direction: column;
+    padding-left: 2rem;
+    background: rgba(255, 255, 255, 0);
+    z-index: 1000;
+    bottom: 1rem;
+}
+.input-wrap {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    margin-bottom: 0.5rem;
+}
+label {
+    flex-grow: 1;
+    font-family: Signika, sans-serif;
+}
+input {
+    width: auto;
+    justify-content: flex-end;
+}

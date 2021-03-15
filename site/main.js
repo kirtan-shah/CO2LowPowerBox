@@ -1,13 +1,10 @@
 function unpack(rows, key) {
     return rows.map(row => row[key]);
 }
-
-$(document).ready(() => {
-    let before = new Date(new Date().setFullYear(2020));
-    let after = new Date(new Date().setFullYear(2022));
+function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment()) {
     $.get(`/loadData?startTime=${before.toISOString()}&endTime=${after.toISOString()}`, function(data) {
         let rows = data.values;
-        let dates = unpack(rows, 'ts');
+        let dates = rows.map(row => moment(row.ts).local().toISOString());
         let trace1 = {
             type: 'scatter',
             name: 'CO2 (ppm)',
@@ -34,8 +31,21 @@ $(document).ready(() => {
             xaxis: { domain: [0, 0.8] },
             yaxis: { title: 'CO2 (ppm)', titlefont: {color: '#1f77b4'}, tickfont: {color: '#1f77b4'} },
             yaxis2: { title: 'Temperature (°C)', side: 'right', overlaying: 'y', titlefont: {color: '#ff7f0e'}, tickfont: {color: '#ff7f0e'} },
-            yaxis3: { title: 'Humidity (%)', side: 'right', overlaying: 'y', anchor: 'free', position: 0.9, titlefont: {color: '#007f00'}, tickfont: {color: '#007f00'}}
+            yaxis3: { title: 'Humidity (%)', side: 'right', overlaying: 'y', anchor: 'free', position: 0.9, titlefont: {color: '#007f00'}, tickfont: {color: '#007f00'}},
+            paper_bgcolor: 'rgba(255, 255, 255, 0)',
+            plot_bgcolor: 'rgba(255, 255, 255, 0)'
         };
         Plotly.newPlot('chart', traces, layout);
+    });
+}
+
+$(document).ready(() => {
+    fetchAndPlot();
+    $('#startWindow').val(moment().subtract(1, 'd').format("YYYY-MM-DD[T]HH:mm"));
+    $('#endWindow').val(moment().format("YYYY-MM-DD[T]HH:mm"));
+    $('#startWindow, #endWindow').on('change', () => {
+        let before = moment($('#startWindow').val());
+        let after = moment($('#endWindow').val());
+        fetchAndPlot(before, after);
     });
 })

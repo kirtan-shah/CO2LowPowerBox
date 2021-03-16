@@ -24,9 +24,9 @@ function adjustedPPM(m) {
     return adj;
 }
 
-function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment()) {
+function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment().add(1, 'd')) {
     $.get(`/loadData?startTime=${before.toISOString()}&endTime=${after.toISOString()}`, function(data) {
-        let rows = data.values;
+        let rows = data.values;x
         let dates = rows.map(row => moment(row.ts).subtract(new Date().getTimezoneOffset(), 'm').toISOString());
         let m = unpack(rows, 'co2_ppm');
         let adj = adjustedPPM(m);
@@ -82,7 +82,7 @@ function refresh() {
 $(document).ready(() => {
     fetchAndPlot();
     $('#startWindow').val(moment().subtract(1, 'd').format("YYYY-MM-DD[T]HH:mm"));
-    $('#endWindow').val(moment().format("YYYY-MM-DD[T]HH:mm"));
+    $('#endWindow').val(moment().add(1, 'd').format("YYYY-MM-DD[T]HH:mm"));
     $('#startWindow, #endWindow').on('change', refresh);
 })
 

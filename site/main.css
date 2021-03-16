@@ -27,11 +27,12 @@ body {
     background: rgba(255, 255, 255, 0);
     z-index: 1000;
     bottom: 1rem;
+    width: 30%;
 }
 .input-wrap {
     display: flex;
     flex-direction: row;
-    width: 30%;
+    width: 100%;
     margin-bottom: 0.5rem;
 }
 label {
@@ -41,4 +42,20 @@ label {
 input {
     width: auto;
     justify-content: flex-end;
+}
+#refresh {
+    margin-left: auto;
+    width: auto;
+    padding: 0.5rem 1.5rem;
+    outline: none;
+    font-family: Signika;
+    font-size: 1.25rem;
+    border-radius: 5px;
+    border: 1px solid #28a745;
+    color: white;
+    background: #28a745;
+    transition: 200ms all;
+}
+#refresh:hover {
+    background: #218839;
 }

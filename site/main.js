@@ -39,13 +39,15 @@ function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment()) {
     });
 }
 
+function refresh() {
+    let before = moment($('#startWindow').val());
+    let after = moment($('#endWindow').val());
+    fetchAndPlot(before, after);
+}
+
 $(document).ready(() => {
     fetchAndPlot();
     $('#startWindow').val(moment().subtract(1, 'd').format("YYYY-MM-DD[T]HH:mm"));
     $('#endWindow').val(moment().format("YYYY-MM-DD[T]HH:mm"));
-    $('#startWindow, #endWindow').on('change', () => {
-        let before = moment($('#startWindow').val());
-        let after = moment($('#endWindow').val());
-        fetchAndPlot(before, after);
-    });
+    $('#startWindow, #endWindow').on('change', refresh);
 })

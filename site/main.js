@@ -26,7 +26,7 @@ function adjustedPPM(m) {
 
 function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment().add(1, 'd')) {
     $.get(`/loadData?startTime=${before.toISOString()}&endTime=${after.toISOString()}`, function(data) {
-        let rows = data.values;x
+        let rows = data.values;
         let dates = rows.map(row => moment(row.ts).subtract(new Date().getTimezoneOffset(), 'm').toISOString());
         let m = unpack(rows, 'co2_ppm');
         let adj = adjustedPPM(m);

@@ -4,10 +4,26 @@ function unpack(rows, key) {
     return rows.map(row => row[key]);
 }
 
+function movingAvg(arr, radius) {
+    let result = [];
+    for(let i = 0; i < arr.length; i++) {
+        let sum = 0;
+        let N = 0;
+        for(let j = i - radius; j <= i + radius; j++) {
+            if(j >= 0 && j < arr.length) {
+                sum += arr[j];
+                N++;
+            }
+        }
+        result.push(sum / N);
+    }
+    return result;
+}
+
 function adjustedPPM(m) {
     const tau = 72;
     const timestep = 15;
-    let adj = [];
+    let dmdt = [];
     for(let i = 0; i < m.length; i++) {
         let deltaT = 0, rise = 0;
         if(i > 0) {
@@ -18,9 +34,10 @@ function adjustedPPM(m) {
             deltaT += timestep;
             rise += m[i + 1] - m[i];
         }
-        let dmdt = rise / deltaT;
-        adj.push(tau*dmdt + m[i]);
+        dmdt.push(rise / deltaT);
     }
+    dmdt = movingAvg(dmdt, 3);
+    let adj = dmdt.map((d, i) => tau*d + m[i]);
     return adj;
 }
 
@@ -36,7 +53,8 @@ function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment().add(1
             x: dates,
             y: adj,
             yaxis: 'y4',
-            line: {color: '#9534eb'}
+            line: {color: '#9534eb'},
+            visible: false
         };
         let trace1 = {
             type: 'scatter',
@@ -62,7 +80,7 @@ function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment().add(1
         var layout = {
             title: 'CO2 Low Power Box',
             xaxis: { domain: [0.1, 0.84] },
-            yaxis4: { title: 'Adjusted CO2 (ppm)', titlefont: {color: '#9534eb'}, tickfont: {color: '#9534eb'}, side: 'left', overlaying: 'y', anchor: 'free', position: 0},
+            yaxis4: { title: 'Adjusted CO2 (ppm)', titlefont: {color: '#9534eb'}, tickfont: {color: '#9534eb'}, side: 'left', overlaying: 'y', anchor: 'free', position: 0, matches: 'y'},
             yaxis: { title: 'CO2 (ppm)', titlefont: {color: '#1f77b4'}, tickfont: {color: '#1f77b4'}, position: 0.07 },
             yaxis2: { title: 'Temperature (°C)', side: 'right', overlaying: 'y', titlefont: {color: '#ff7f0e'}, tickfont: {color: '#ff7f0e'} },
             yaxis3: { title: 'Humidity (%)', side: 'right', overlaying: 'y', anchor: 'free', position: 0.9, titlefont: {color: '#007f00'}, tickfont: {color: '#007f00'}},
@@ -85,6 +103,7 @@ $(document).ready(() => {
     $('#endWindow').val(moment().add(1, 'd').format("YYYY-MM-DD[T]HH:mm"));
     $('#startWindow, #endWindow').on('change', refresh);
 })
+
 
 $(document.body).click(() => {
     

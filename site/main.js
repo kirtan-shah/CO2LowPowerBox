@@ -1,4 +1,12 @@
-let visibleState = []
+let visibleState = [];
+const socket = io();
+socket.on('connect', () => {
+    socket.on('refresh', () => {
+        console.log('Server refresh');
+        refresh();
+    });
+    console.log('socket.io connected!');
+});
 
 function unpack(rows, key) {
     return rows.map(row => row[key]);

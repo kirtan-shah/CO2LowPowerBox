@@ -1,10 +1,19 @@
 const express = require('express');
 const app = express();
+const http = require('http').Server(app);
 const cors = require('cors');
 const moment = require('moment');
 const pool = require('./db');
 const path = require('path');
 const PORT = process.env.PORT || 3636;
+
+const io = require('socket.io')(http);
+io.on('connection', (socket) => {
+    console.log('Client connected.');
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
 
 app.use(cors());
 app.use(express.json());
@@ -24,6 +33,8 @@ app.post('/update', async (req, res) => {
     const returnValue = await pool.query(query); // psql console output
     // console.log(returnValue); 
     res.sendStatus(200);
+    console.log("emit refresh event");
+    io.emit("refresh");
 });
 app.get('/loadData', async (req, res) => {
     try {
@@ -54,4 +65,4 @@ function convertFloat(bytes) {
     return arr;
 }
 
-app.listen(PORT, () => console.log(`Started server at port: ${PORT}!`));
+http.listen(PORT, () => console.log(`Started server at port: ${PORT}!`));

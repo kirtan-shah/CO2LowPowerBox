@@ -35,13 +35,14 @@ body {
     width: 100%;
     margin-bottom: 0.5rem;
 }
-label {
+.input-wrap label {
     flex-grow: 1;
     font-family: Signika, sans-serif;
 }
-input {
+.input-wrap input, .input-wrap span {
     width: auto;
     justify-content: flex-end;
+    font-family: Signika;
 }
 #refresh {
     margin-left: auto;

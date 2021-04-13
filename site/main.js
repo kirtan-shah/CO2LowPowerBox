@@ -55,7 +55,7 @@ function fetchAndPlot(before = moment().subtract(1, 'd'), after = moment().add(1
         let dates = rows.map(row => moment(row.ts).subtract(new Date().getTimezoneOffset(), 'm').toISOString());
         let mostRecentUpdate = moment(dates[dates.length - 1]).add(new Date().getTimezoneOffset(), 'm');
         let m = unpack(rows, 'co2_ppm');
-        $('#last-modified-time').text(mostRecentUpdate.format('LT') + `(${m[m.length - 1]} ppm)`);
+        $('#last-modified-time').text(mostRecentUpdate.format('LT') + ` (${m[m.length - 1]} ppm)`);
         let adj = adjustedPPM(m);
         let trace0 = {
             type: 'scatter',

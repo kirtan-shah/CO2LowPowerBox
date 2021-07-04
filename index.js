@@ -25,7 +25,10 @@ app.post('/update', async (req, res) => {
     let humidity = convertFloat(new Int8Array(Buffer.from(req.body.humidity, 'base64')));
     let timestamp = moment();
     let timestampBegin = moment(req.body.timestamp);
+    console.log("End timestamp", timestamp);
+    console.log("Begin timestamp", timestampBegin);
     let deltaMs = timestamp.diff(timestampBegin) / (co2.length - 1);
+    console.log(`Diff: ${timestamp.diff(timestampBegin)}, Len: ${co2.length - 1}, deltaMs: ${deltaMs}`);
     let query = "INSERT INTO sensor_data VALUES ";
     for(let i = co2.length - 1; i >= 0; i--) {
         query += `('${timestamp.toISOString()}', ${co2[i]}, ${temperature[i]}, ${humidity[i]}),`;

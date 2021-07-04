@@ -26,6 +26,7 @@ app.post('/update', async (req, res) => {
     let timestamp = moment();
     let timestampBegin = moment(req.body.timestamp);
     console.log("End timestamp", timestamp);
+    console.log("Begin timestamp raw", req.body.timestamp);
     console.log("Begin timestamp", timestampBegin);
     let deltaMs = timestamp.diff(timestampBegin) / (co2.length - 1);
     console.log(`Diff: ${timestamp.diff(timestampBegin)}, Len: ${co2.length - 1}, deltaMs: ${deltaMs}`);

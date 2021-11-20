@@ -16,6 +16,15 @@ body {
     opacity: 0.9;
     /* filter: blur(2px); */
 }
+#chart {
+    width: 80%;
+}
+#picture {
+    position: absolute;
+    left: 70%;
+    top: 40%;
+    width: 20%;
+}
 .modebar {
     margin-top: 1rem !important;
     margin-right: 0.5rem !important;

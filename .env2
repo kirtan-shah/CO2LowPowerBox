@@ -1,7 +1,0 @@
-PG_USER=postgres
-PG_PASSWORD=3YYqy6aE
-PG_HOST=localhost
-PG_PORT=5432
-PG_DATABASE=co2box
-
-

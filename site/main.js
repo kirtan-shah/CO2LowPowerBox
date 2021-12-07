@@ -112,12 +112,12 @@ $(document).ready(() => {
     $('#startWindow').val(moment().subtract(1, 'd').format("YYYY-MM-DD[T]HH:mm"));
     $('#endWindow').val(moment().add(1, 'd').format("YYYY-MM-DD[T]HH:mm"));
     $('#startWindow, #endWindow').on('change', refresh);
-    setTimeout(() => {
+    setInterval(() => {
         let el = $('.infolayer .legend');
         let pos = el.offset();
         pos.top += el.find('rect').height() + 20;
         $('#picture').offset(pos);
-    }, 1000);
+    }, 500);
 })
 
 

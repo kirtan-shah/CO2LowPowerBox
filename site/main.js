@@ -115,7 +115,7 @@ $(document).ready(() => {
     let loop = setInterval(() => {
         let el = $('.infolayer .legend');
         let pos = el.offset();
-        if(pos.x > 0 && pos.y > 0) clearInterval(loop);
+        if(pos.left > 0 && pos.top > 0) clearInterval(loop);
         pos.top += el.find('rect').height() + 20;
         $('#picture').offset(pos);
     }, 500);
